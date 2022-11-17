@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>미국 시가총액 TOP 10 종목 회귀분석 </title>
+  <link rel="stylesheet" href="https://naver.github.io/billboard.js/release/latest/dist/theme/datalab.min.css">
+  <script src="https://naver.github.io/billboard.js/release/latest/dist/billboard.pkgd.min.js"></script>
+
+  <link rel="stylesheet" type="text/css" href="style.css" />
+</head>
+<body>
+  <br>
+  <br>
+  <h1>대형주 분석을 통한 거시경제 예측</h1>
+<div class="show-form">
+  <div class="container">
+    <h2>우리만의 차트</h2>
+    <div style = "display: flex; flex-direction: row;">
+      <div id="ownChart" style="width: 75%; margin-right: 20px;"></div>
+      <div style="width: 20%;"><img src = "./img/떡상"/></div>
+    </div>
+  </div>
+  <div class="container">
+    <h2>차트 설명</h2>
+    <br>
+    <h3>Basement Index</h3>
+    <p>미국 대형주 분석을 통해 균형 잡힌 거시 경제 예측 지표</p>
+    <h3>Balanced NASDAQ</h3>
+    <p>시가 총액 비중을 동일하게 설정, 다양한 산업군을 반영한 균형 잡힌 객관적 지표</p>
+  </div class = "box">
+  <div class = "container">
+    <div style="display: flex; flex-direction:row; justify-content: space-evenly;">
+    <h2>
+      NASDAQ TOP 10
+    </h2>
+    <h2>
+      NASDAQ
+    </h2>
+  </div>
+  <div style="display: flex; flex-direction:row;">
+    <div id = "Top10Chart" style = "background-color: white; width: 50%; height: 300px;"></div>
+    <div id="NASDAQChart" style = "background-color: white; width: 50%; height: 300px;"></div>
+  </div>
+</div>
+  <div class="container">
+    <h2>주요 종목 Top 10</h2>
+    <br>
+    <h3>애플 - 3200조</h3>
+    <p>전 세계 시가총액 1위 it 기술주, 성장주임과 동시에 가치주 성격을 띠고 있는 독보적 기업</p>
+    <h3>마이크로소프트 - 2400조</h3>
+    <p>전세계 시가총액 2위 it 기술주, 전세계 운영체제 및 오피스업계 1위 it기업</p>
+    <h3>알파벳(구글) - 1700조</h3>
+    <p>구글 검색엔진을 중심으로 안드로이드, 유튜브, 클라우드 사업 등을 하는 it 기술주</p>
+    <h3>아마존 - 1300조 </h3>
+    <p>경기 영향을 받는 이커머스, 클라우드 업계 1위 경기 순환주</p>
+    <h3>버크셔헤서웨이 - 900조</h3>
+    <p >가치 투자의 대가인 웨렌 버핏을 중심으로, 적극적인 M&A를 통해 다양한 자회사를 보유하고 있는 금융 투자 기업(가치주)</p>
+    <h3>테슬라 - 800조	</h3>
+    <p>전 세계 1위 전기 자동차 회사, 성장 가능성을 높게 평가받는 대표적인 성장주로 경기에 민감한 종목</p>
+    <h3>유나이티드헬스 - 650조</h3>
+    <p>전 세계 최대 민간 의료보험 및 헬스케어 서비스 기업</p>
+    <h3>존슨앤드존슨 - 610조	</h3>
+    <p>전 세계 최대 제약 및 위생 관련 제품 기업</p>
+    <h3>엑슨모빌 - 600조	</h3>
+    <p>미국 최대 석유 에너지 기업, 에너지 가격과 시장 유동성에 영향을 받는 가치주</p>
+    <h3>제이피모건체이스 - 520조</h3>
+    <p>투자은행인 JP모건과 상업은행인 체이스가 합병한 미국 최대 규모 은행(가치주)</p>
+  </div class = "box">
+  </div>
+<script>
+  let ourChart = bb.generate({
+    data: {
+      x : "x",
+      url: "./jisu2.csv",
+      type: "line",
+      axes : {
+        data1: "y",
+        data2: "y2",
+      }
+    },
+    bar: {
+      width: {
+        ratio: 0.5
+      }
+    },
+  axis : {
+    x: {
+      type: "timeseries",
+      tick: {
+        fit: false,
+        format: "%m.%d"
+      }
+    }
+  },
+    bindto: "#ownChart"
+  });
+  setTimeout(function() {
+      ourChart.load({
+      });
+  }, 2000);
+
+  let chartOfTen = bb.generate({
+    data: {
+      x : "x",
+      url: "./result.csv",
+      type: "area-spline",
+    },
+    bar: {
+      width: {
+        ratio: 0.5
+      }
+    },
+  axis : {
+    x: {
+      type: "timeseries",
+      tick: {
+        fit: false,
+        format: "%Y-%m-%d"
+      }
+    },
+  },
+    bindto: "#Top10Chart"
+  });
+
+  let NASDAQChart = bb.generate({
+    data: {
+      x : "x",
+      url: "./NASDAQ.csv",
+      type: "bar",
+      colors: {
+        NASDAQ: '#E9CFC0' 
+      }
+    },
+    bar: {
+      width: {
+        ratio: 0.5
+      }
+    },
+  axis : {
+    x: {
+      type: "timeseries",
+      tick: {
+        fit: true,
+        format: "%Y-%m-%d"
+      }
+    },
+    y: {
+      max: 11500,
+      min: 11000
+    }
+  },
+    bindto: "#NASDAQChart"
+  });
+  </script>
+</body>
+</html>
